@@ -10,6 +10,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -105,19 +106,29 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     fun displayNextImage() {
-        imageUriListIndex++
-        if (imageUriListIndex >= imageUriList.size){
-            imageUriListIndex = 0
+        if (0 < imageUriList.size){
+            imageUriListIndex++
+            if (imageUriListIndex >= imageUriList.size){
+                imageUriListIndex = 0
+            }
+            imageDisplay.setImageURI(imageUriList.get(imageUriListIndex))
+        } else {
+            var toast = Toast.makeText(this, "画像ファイルへのアクセスを許可してください", Toast.LENGTH_SHORT)
+            toast.show()
         }
-        imageDisplay.setImageURI(imageUriList.get(imageUriListIndex))
     }
 
     fun displayPrevImage() {
-        imageUriListIndex--
-        if (imageUriListIndex < 0){
-            imageUriListIndex = imageUriList.size-1
+        if (0 < imageUriList.size) {
+            imageUriListIndex--
+            if (imageUriListIndex < 0) {
+                imageUriListIndex = imageUriList.size - 1
+            }
+            imageDisplay.setImageURI(imageUriList.get(imageUriListIndex))
+        } else {
+            var toast = Toast.makeText(this, "画像ファイルへのアクセスを許可してください", Toast.LENGTH_SHORT)
+            toast.show()
         }
-        imageDisplay.setImageURI(imageUriList.get(imageUriListIndex))
     }
 
     fun slideShowStart() {
